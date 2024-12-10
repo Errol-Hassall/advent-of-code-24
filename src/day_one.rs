@@ -21,7 +21,6 @@ pub fn puzzle_one() -> io::Result<i32> {
 
     let mut list_one: Vec<i32> = vec![];
     let mut list_two: Vec<i32> = vec![];
-    let mut list_diff = vec![];
 
     for line in wbyl {
         list_one.push(line[0].parse().unwrap());
@@ -32,18 +31,13 @@ pub fn puzzle_one() -> io::Result<i32> {
     list_two.sort();
 
     let mut index = 0;
+    let mut total = 0;
 
     while index < list_one.len() {
         let diff = list_two[index] - list_one[index];
 
-        list_diff.push(diff.abs());
+        total += diff.abs();
         index +=1;
-    }
-
-    let mut total = 0;
-
-    for element in list_diff {
-        total += element
     }
 
     Ok(total)

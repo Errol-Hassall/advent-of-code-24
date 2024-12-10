@@ -42,3 +42,40 @@ pub fn puzzle_one() -> io::Result<i32> {
 
     Ok(total)
 }
+
+pub fn puzzle_two() -> io::Result<i32> {
+    let whole_file = filename_to_string("./src/list.txt")?;
+    let wbyl = words_by_line(&whole_file);
+
+    let mut list_one: Vec<i32> = vec![];
+    let mut list_two: Vec<i32> = vec![];
+
+    for line in wbyl {
+        list_one.push(line[0].parse().unwrap());
+        list_two.push(line[1].parse().unwrap());
+    }
+
+    list_one.sort();
+    list_two.sort();
+
+    let mut list_three: Vec<i32> = vec![];
+
+    for element in &list_one {
+        let mut sum: Vec<i32> = vec![];
+
+        for element_two in &list_two {
+            if *element_two == *element {
+                sum.push(*element)
+            }
+        }
+        if(sum.len() > 0) {
+            let length: i32 = sum.len().try_into().unwrap();
+            list_three.push(sum[0] * length)
+        }
+        sum = vec![];
+    }
+
+    let total = list_three.iter().sum();
+
+    Ok(total)
+}
